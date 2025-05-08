@@ -45,530 +45,93 @@
         .section-card:hover {
             transform: translateY(-5px);
         }
+        
+        .notification {
+            animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 4.5s forwards;
+            transform: translateX(120%);
+        }
+        
+        @keyframes slideIn {
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+        
+        /* Hide all pages by default */
+        .page {
+            display: none;
+        }
+        
+        /* Show active page */
+        .page.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-    <!-- Header -->
-    <header class="bg-primary text-white shadow-md">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
+    <!-- Health Info Notifications Container -->
+    <div id="notifications" class="fixed top-5 left-5 z-50 w-80 space-y-3">
+        <!-- Notifications will be added here via JavaScript -->
+    </div>
+
+    <!-- Authentication Page -->
+    <div id="auth-page" class="page active min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+            <div class="bg-primary text-white p-6 text-center">
                 <h1 class="text-2xl font-bold">KF Santé</h1>
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <a href="#" class="login-btn px-4 py-2 rounded-lg border border-white hover:bg-white hover:text-primary transition">
-                        تسجيل الدخول
-                    </a>
-                    <button id="menuToggle" class="md:hidden focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
+                <p class="mt-2">رعاية صحية متكاملة في متناول يديك</p>
             </div>
             
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="hidden md:hidden mt-4">
-                <nav class="flex flex-col space-y-2">
-                    <a href="#" class="py-2 hover:bg-white/10 px-3 rounded">الرئيسية</a>
-                    <a href="#remote" class="py-2 hover:bg-white/10 px-3 rounded">الاستشارات عن بعد</a>
-                    <a href="#home-visits" class="py-2 hover:bg-white/10 px-3 rounded">الزيارات المنزلية</a>
-                    <a href="#appointments" class="py-2 hover:bg-white/10 px-3 rounded">أخذ المواعيد</a>
-                    <a href="#labs" class="py-2 hover:bg-white/10 px-3 rounded">المخابر والتحاليل</a>
-                    <a href="#register" class="py-2 hover:bg-white/10 px-3 rounded">التسجيل</a>
-                </nav>
-            </div>
-        </div>
-    </header>
-    
-    <!-- Desktop Navigation -->
-    <nav class="hidden md:block bg-white dark:bg-gray-800 shadow-md">
-        <div class="container mx-auto px-4">
-            <ul class="flex justify-center space-x-8 space-x-reverse">
-                <li><a href="#" class="py-4 px-2 inline-block text-primary border-b-2 border-primary font-medium">الرئيسية</a></li>
-                <li><a href="#remote" class="py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition">الاستشارات عن بعد</a></li>
-                <li><a href="#home-visits" class="py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition">الزيارات المنزلية</a></li>
-                <li><a href="#appointments" class="py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition">أخذ المواعيد</a></li>
-                <li><a href="#labs" class="py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition">المخابر والتحاليل</a></li>
-                <li><a href="#register" class="py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition">التسجيل</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="py-12 bg-gradient-to-b from-primary/10 to-transparent">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-6 md:mb-0">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">رعاية صحية متكاملة</h2>
-                    <p class="text-lg mb-6">نوفر لكم خدمات طبية متنوعة وميسرة من المنزل وعبر الإنترنت.</p>
-                    <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition">
-                            ابدأ الآن
-                        </a>
-                        <a href="#" class="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-2 px-6 rounded-lg transition">
-                            اكتشف المزيد
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2">
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' width='800' height='500'%3E%3Crect fill='%235D5CDE' x='0' y='0' width='800' height='500'/%3E%3Ctext x='400' y='250' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='70' fill='white'%3EKF Santé%3C/text%3E%3Cpath fill='none' stroke='white' stroke-width='10' d='M250,140 L550,140 Q620,140 620,210 L620,290 Q620,360 550,360 L250,360 Q180,360 180,290 L180,210 Q180,140 250,140 Z' stroke-linecap='round'/%3E%3Cpath fill='none' stroke='white' stroke-width='10' d='M310,180 L310,320 M400,180 L400,320 M490,180 L490,320 M230,250 L570,250' stroke-linecap='round'/%3E%3C/svg%3E" 
-                             alt="KF Santé" class="rounded w-full h-auto">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Main Services Section -->
-    <section class="py-12" id="main-services">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 text-center">خدماتنا الرئيسية</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Remote Consultations -->
-                <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-blue-500 h-2"></div>
-                    <div class="p-6">
-                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-video text-blue-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-center">الاستشارات عن بعد</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center mb-4">استشارات طبية عبر الإنترنت مع أطباء متخصصين.</p>
-                        <a href="#remote" class="block text-center text-primary hover:underline">اكتشف المزيد</a>
-                    </div>
-                </div>
-                
-                <!-- Home Visits -->
-                <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-green-500 h-2"></div>
-                    <div class="p-6">
-                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-home text-green-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-center">الزيارات المنزلية</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center mb-4">خدمات طبية متكاملة في منزلك للراحة والخصوصية.</p>
-                        <a href="#home-visits" class="block text-center text-primary hover:underline">اكتشف المزيد</a>
-                    </div>
-                </div>
-                
-                <!-- Appointments -->
-                <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-purple-500 h-2"></div>
-                    <div class="p-6">
-                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-calendar-alt text-purple-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-center">أخذ المواعيد</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center mb-4">حجز المواعيد مع الأطباء والمتخصصين بسهولة.</p>
-                        <a href="#appointments" class="block text-center text-primary hover:underline">اكتشف المزيد</a>
-                    </div>
-                </div>
-                
-                <!-- Labs and Tests -->
-                <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-red-500 h-2"></div>
-                    <div class="p-6">
-                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-flask text-red-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-center">المخابر والتحاليل</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center mb-4">تحاليل طبية دقيقة مع إمكانية الحصول على النتائج إلكترونيًا.</p>
-                        <a href="#labs" class="block text-center text-primary hover:underline">اكتشف المزيد</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Remote Consultations Section -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-800" id="remote">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 text-center">الاستشارات عن بعد</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Virtual Clinic -->
-                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-laptop-medical text-primary ml-2"></i>
-                        العيادة الافتراضية
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-6">اتصل بطبيبك بالصوت والصورة من المنزل للحصول على الاستشارة الطبية</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                            <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-user-md text-2xl"></i></div>
-                            <h4 class="font-medium">طب عام</h4>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                            <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-baby text-2xl"></i></div>
-                            <h4 class="font-medium">طب الأطفال</h4>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                            <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-female text-2xl"></i></div>
-                            <h4 class="font-medium">طب النساء والولادة</h4>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Mental Health Support -->
-                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-brain text-primary ml-2"></i>
-                        منصة الدعم النفسي
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-6">الدعم النفسي والمشورة المتخصصة من خلال جلسات آمنة وسرية</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                            <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-stethoscope text-2xl"></i></div>
-                            <h4 class="font-medium">طب نفسي</h4>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                            <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-comments text-2xl"></i></div>
-                            <h4 class="font-medium">أخصائي نفساني</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Home Visits Section -->
-    <section class="py-12" id="home-visits">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 text-center">الزيارات المنزلية</h2>
-            
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-                <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">
-                    نوفر لك خدمات طبية متكاملة في منزلك للراحة والخصوصية. طاقم طبي متخصص يصل إليك أينما كنت.
-                </p>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
-                        <span class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center ml-4">
-                            <i class="fas fa-user-md text-green-600 dark:text-green-400"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-medium">زيارة طبيب</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">كشف طبي شامل في منزلك</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
-                        <span class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center ml-4">
-                            <i class="fas fa-syringe text-blue-600 dark:text-blue-400"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-medium">خدمة التمريض</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">رعاية تمريضية متخصصة</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
-                        <span class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center ml-4">
-                            <i class="fas fa-walking text-purple-600 dark:text-purple-400"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-medium">علاج طبيعي</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">جلسات علاج طبيعي منزلية</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
-                        <span class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center ml-4">
-                            <i class="fas fa-hand-holding-heart text-yellow-600 dark:text-yellow-400"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-medium">المرافقة الصحية</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">رعاية دائمة للمرضى</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
-                        <span class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center ml-4">
-                            <i class="fas fa-syringe text-red-600 dark:text-red-400"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-medium">التطعيمات المنزلية</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">تطعيمات آمنة في المنزل</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
-                        <span class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center ml-4">
-                            <i class="fas fa-x-ray text-indigo-600 dark:text-indigo-400"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-medium">الأشعة المنزلية</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">خدمات أشعة متنقلة</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Appointments Section -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-800" id="appointments">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 text-center">أخذ المواعيد</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
-                        <h3 class="text-xl font-bold mb-4">التخصصات الطبية</h3>
-                        
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-heartbeat text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">القلب</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-bone text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">العظام</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-brain text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">الأعصاب</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-eye text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">العيون</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-tooth text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">الأسنان</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-lungs text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">الصدرية</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-allergies text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">الجلدية</h4>
-                            </div>
-                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                <div class="text-primary"><i class="fas fa-child text-xl"></i></div>
-                                <h4 class="text-sm font-medium mt-1">الأطفال</h4>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6">
-                            <h3 class="text-xl font-bold mb-4">الأخصائيين</h3>
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                    <div class="text-primary"><i class="fas fa-comments text-xl"></i></div>
-                                    <h4 class="text-sm font-medium mt-1">أخصائي نفساني</h4>
-                                </div>
-                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
-                                    <div class="text-primary"><i class="fas fa-comment-dots text-xl"></i></div>
-                                    <h4 class="text-sm font-medium mt-1">أخصائي أرطوفوني</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
-                        <h3 class="text-xl font-bold mb-4 text-center">حجز موعد</h3>
-                        
-                        <form>
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">التخصص</label>
-                                <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
-                                    <option value="">اختر التخصص</option>
-                                    <option value="1">طب عام</option>
-                                    <option value="2">طب القلب</option>
-                                    <option value="3">طب العظام</option>
-                                    <option value="4">طب الأعصاب</option>
-                                    <option value="5">طب العيون</option>
-                                    <option value="6">أخصائي نفساني</option>
-                                </select>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">التاريخ</label>
-                                <input type="date" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">الوقت</label>
-                                <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
-                                    <option value="">اختر الوقت</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                </select>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">ملاحظات</label>
-                                <textarea class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base" rows="3"></textarea>
-                            </div>
-                            
-                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition">
-                                تأكيد الحجز
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Labs and Tests Section -->
-    <section class="py-12" id="labs">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 text-center">المخابر والتحاليل</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-                        <h3 class="text-xl font-bold mb-6">التحاليل المتوفرة</h3>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل الدم الشامل</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">CBC</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل وظائف الكبد</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Liver Function Tests</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل وظائف الكلى</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Kidney Function Tests</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل الكوليسترول والدهون</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Lipid Profile</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل السكر الصائم</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Fasting Blood Sugar</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل السكر التراكمي</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">HbA1c</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل هرمونات الغدة الدرقية</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Thyroid Function Tests</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
-                                <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
-                                <div>
-                                    <h4 class="font-medium">تحليل فيتامين د</h4>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Vitamin D Test</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-                        <h3 class="text-xl font-bold mb-4 text-center">طلب تحليل</h3>
-                        
-                        <form>
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">نوع التحليل</label>
-                                <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
-                                    <option value="">اختر نوع التحليل</option>
-                                    <option value="1">تحليل الدم الشامل</option>
-                                    <option value="2">تحليل وظائف الكبد</option>
-                                    <option value="3">تحليل وظائف الكلى</option>
-                                    <option value="4">تحليل السكر الصائم</option>
-                                    <option value="5">تحليل فيتامين د</option>
-                                </select>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">التاريخ</label>
-                                <input type="date" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium mb-1">طريقة الحصول على العينة</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="radio" name="sample_method" class="ml-2 w-4 h-4 text-primary">
-                                        <span>زيارة المختبر</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="radio" name="sample_method" class="ml-2 w-4 h-4 text-primary">
-                                        <span>الزيارة المنزلية</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium mb-1">طريقة الدفع</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="radio" name="payment_method" class="ml-2 w-4 h-4 text-primary">
-                                        <span>البريدي موب</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="radio" name="payment_method" class="ml-2 w-4 h-4 text-primary">
-                                        <span>نقدًا (كاش)</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition">
-                                طلب التحليل
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Registration Section -->
-    <section class="py-12 bg-gray-50 dark:bg-gray-800" id="register">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 text-center">التسجيل</h2>
-            
-            <div class="max-w-md mx-auto bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+            <div class="p-6">
                 <div class="mb-6 text-center">
-                    <p class="text-gray-600 dark:text-gray-300">أنشئ حسابك للوصول لجميع الخدمات</p>
+                    <div class="tabs flex border-b border-gray-300 dark:border-gray-700">
+                        <button id="login-tab" class="tab-btn flex-1 py-2 font-medium border-b-2 border-primary text-primary">تسجيل الدخول</button>
+                        <button id="register-tab" class="tab-btn flex-1 py-2 font-medium border-b-2 border-transparent">إنشاء حساب</button>
+                    </div>
                 </div>
                 
-                <form>
+                <!-- Login Form -->
+                <form id="login-form" class="tab-content">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">البريد الإلكتروني</label>
+                        <input type="email" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-1">كلمة المرور</label>
+                        <input type="password" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-6">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="ml-2 w-4 h-4 text-primary">
+                            <span class="text-sm">تذكرني</span>
+                        </label>
+                        <a href="#" class="text-sm text-primary hover:underline">نسيت كلمة المرور؟</a>
+                    </div>
+                    
+                    <button type="button" id="login-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition mb-4">
+                        تسجيل الدخول
+                    </button>
+                    
+                    <div class="relative flex items-center justify-center mb-4">
+                        <hr class="w-full border-gray-300 dark:border-gray-600">
+                        <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm">أو</span>
+                        <hr class="w-full border-gray-300 dark:border-gray-600">
+                    </div>
+                    
+                    <button type="button" class="w-full bg-white dark:bg-gray-600 text-gray-700 dark:text-white border border-gray-300 dark:border-gray-500 font-medium py-3 px-4 rounded-lg transition flex justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2" viewBox="0 0 16 16">
+                            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                        </svg>
+                        تسجيل الدخول باستخدام جوجل
+                    </button>
+                </form>
+                
+                <!-- Registration Form -->
+                <form id="register-form" class="tab-content hidden">
                     <div class="mb-4">
                         <label class="block text-sm font-medium mb-1">الاسم الكامل</label>
                         <input type="text" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
@@ -589,13 +152,13 @@
                         <input type="password" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
                     </div>
                     
-                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition mb-4">
+                    <button type="button" id="register-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition mb-4">
                         إنشاء حساب
                     </button>
                     
                     <div class="relative flex items-center justify-center mb-4">
                         <hr class="w-full border-gray-300 dark:border-gray-600">
-                        <span class="px-2 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm">أو</span>
+                        <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm">أو</span>
                         <hr class="w-full border-gray-300 dark:border-gray-600">
                     </div>
                     
@@ -606,118 +169,1158 @@
                         التسجيل باستخدام جوجل
                     </button>
                 </form>
+                
+                <div class="text-center mt-4">
+                    <button id="skip-auth-btn" class="text-gray-500 hover:text-primary transition">متابعة كضيف</button>
+                </div>
             </div>
         </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-lg font-bold mb-4">KF Santé</h3>
-                    <p class="text-gray-400">رعاية صحية متكاملة في متناول يديك</p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">روابط سريعة</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">الرئيسية</a></li>
-                        <li><a href="#remote" class="text-gray-400 hover:text-white transition">الاستشارات عن بعد</a></li>
-                        <li><a href="#home-visits" class="text-gray-400 hover:text-white transition">الزيارات المنزلية</a></li>
-                        <li><a href="#appointments" class="text-gray-400 hover:text-white transition">أخذ المواعيد</a></li>
-                        <li><a href="#labs" class="text-gray-400 hover:text-white transition">المخابر والتحاليل</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">تواصل معنا</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt ml-2 text-primary"></i>
-                            <span class="text-gray-400">123-456-7890</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope ml-2 text-primary"></i>
-                            <span class="text-gray-400">info@kfsante.com</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt ml-2 text-primary"></i>
-                            <span class="text-gray-400">الجزائر العاصمة</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">تابعنا</h3>
-                    <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-container" class="hidden">
+        <!-- Header -->
+        <header class="bg-primary text-white shadow-md fixed top-0 w-full z-40">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold">KF Santé</h1>
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <div id="notification-bell" class="relative cursor-pointer">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span id="notification-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        </div>
+                        <div class="user-menu relative">
+                            <button id="userMenuBtn" class="flex items-center space-x-2 space-x-reverse focus:outline-none">
+                                <span class="text-sm hidden md:inline-block">ضيف</span>
+                                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-sm"></i>
+                                </div>
+                            </button>
+                            <div id="userDropdown" class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-40 hidden">
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-user-circle ml-2"></i>الملف الشخصي
+                                </a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-cog ml-2"></i>الإعدادات
+                                </a>
+                                <hr class="my-1 border-gray-200 dark:border-gray-700">
+                                <a href="#" id="logout-btn" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500">
+                                    <i class="fas fa-sign-out-alt ml-2"></i>تسجيل الخروج
+                                </a>
+                            </div>
+                        </div>
+                        <button id="menuToggle" class="md:hidden focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
                     </div>
                 </div>
+                
+                <!-- Mobile Menu -->
+                <div id="mobileMenu" class="hidden md:hidden mt-4">
+                    <nav class="flex flex-col space-y-2">
+                        <a href="#" class="nav-link py-2 hover:bg-white/10 px-3 rounded" data-page="home-page">الرئيسية</a>
+                        <a href="#" class="nav-link py-2 hover:bg-white/10 px-3 rounded" data-page="remote-page">الاستشارات عن بعد</a>
+                        <a href="#" class="nav-link py-2 hover:bg-white/10 px-3 rounded" data-page="home-visits-page">الزيارات المنزلية</a>
+                        <a href="#" class="nav-link py-2 hover:bg-white/10 px-3 rounded" data-page="appointments-page">أخذ المواعيد</a>
+                        <a href="#" class="nav-link py-2 hover:bg-white/10 px-3 rounded" data-page="labs-page">المخابر والتحاليل</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:block bg-white dark:bg-gray-800 shadow-md fixed top-16 w-full z-30">
+            <div class="container mx-auto px-4">
+                <ul class="flex justify-center space-x-8 space-x-reverse">
+                    <li><a href="#" class="nav-link py-4 px-2 inline-block text-primary border-b-2 border-primary font-medium" data-page="home-page">الرئيسية</a></li>
+                    <li><a href="#" class="nav-link py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition" data-page="remote-page">الاستشارات عن بعد</a></li>
+                    <li><a href="#" class="nav-link py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition" data-page="home-visits-page">الزيارات المنزلية</a></li>
+                    <li><a href="#" class="nav-link py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition" data-page="appointments-page">أخذ المواعيد</a></li>
+                    <li><a href="#" class="nav-link py-4 px-2 inline-block hover:text-primary border-b-2 border-transparent hover:border-primary transition" data-page="labs-page">المخابر والتحاليل</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Main Content Container -->
+        <main class="pt-16 md:pt-32">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <!-- Hero Section -->
+                <section class="py-12 bg-gradient-to-b from-primary/10 to-transparent">
+                    <div class="container mx-auto px-4">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 mb-6 md:mb-0">
+                                <h2 class="text-3xl md:text-4xl font-bold mb-4">رعاية صحية متكاملة</h2>
+                                <p class="text-lg mb-6">نوفر لكم خدمات طبية متنوعة وميسرة من المنزل وعبر الإنترنت.</p>
+                                <div class="flex space-x-4 space-x-reverse">
+                                    <a href="#" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition">
+                                        ابدأ الآن
+                                    </a>
+                                    <a href="#" class="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-2 px-6 rounded-lg transition">
+                                        اكتشف المزيد
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2">
+                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' width='800' height='500'%3E%3Crect fill='%235D5CDE' x='0' y='0' width='800' height='500'/%3E%3Ctext x='400' y='250' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='70' fill='white'%3EKF Santé%3C/text%3E%3Cpath fill='none' stroke='white' stroke-width='10' d='M250,140 L550,140 Q620,140 620,210 L620,290 Q620,360 550,360 L250,360 Q180,360 180,290 L180,210 Q180,140 250,140 Z' stroke-linecap='round'/%3E%3Cpath fill='none' stroke='white' stroke-width='10' d='M310,180 L310,320 M400,180 L400,320 M490,180 L490,320 M230,250 L570,250' stroke-linecap='round'/%3E%3C/svg%3E" 
+                                         alt="KF Santé" class="rounded w-full h-auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Main Services Section -->
+                <section class="py-12" id="main-services">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-2xl font-bold mb-8 text-center">خدماتنا الرئيسية</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <!-- Remote Consultations -->
+                            <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                                <div class="bg-blue-500 h-2"></div>
+                                <div class="p-6">
+                                    <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                        <i class="fas fa-video text-blue-500 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2 text-center">الاستشارات عن بعد</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-center mb-4">استشارات طبية عبر الإنترنت مع أطباء متخصصين.</p>
+                                    <a href="#" class="block text-center text-primary hover:underline view-details" data-page="remote-page">اكتشف المزيد</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Home Visits -->
+                            <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                                <div class="bg-green-500 h-2"></div>
+                                <div class="p-6">
+                                    <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                        <i class="fas fa-home text-green-500 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2 text-center">الزيارات المنزلية</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-center mb-4">خدمات طبية متكاملة في منزلك للراحة والخصوصية.</p>
+                                    <a href="#" class="block text-center text-primary hover:underline view-details" data-page="home-visits-page">اكتشف المزيد</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Appointments -->
+                            <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                                <div class="bg-purple-500 h-2"></div>
+                                <div class="p-6">
+                                    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                        <i class="fas fa-calendar-alt text-purple-500 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2 text-center">أخذ المواعيد</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-center mb-4">حجز المواعيد مع الأطباء والمتخصصين بسهولة.</p>
+                                    <a href="#" class="block text-center text-primary hover:underline view-details" data-page="appointments-page">اكتشف المزيد</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Labs and Tests -->
+                            <div class="section-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                                <div class="bg-red-500 h-2"></div>
+                                <div class="p-6">
+                                    <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                        <i class="fas fa-flask text-red-500 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2 text-center">المخابر والتحاليل</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-center mb-4">تحاليل طبية دقيقة مع إمكانية الحصول على النتائج إلكترونيًا.</p>
+                                    <a href="#" class="block text-center text-primary hover:underline view-details" data-page="labs-page">اكتشف المزيد</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
             
-            <div class="border-t border-gray-700 mt-8 pt-6 text-center">
-                <p class="text-gray-400">جميع الحقوق محفوظة &copy; 2023 KF Santé</p>
+            <!-- Remote Consultations Page -->
+            <div id="remote-page" class="page">
+                <section class="py-12">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-2xl font-bold mb-8 text-center">الاستشارات عن بعد</h2>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Virtual Clinic -->
+                            <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                                <h3 class="text-xl font-bold mb-4 flex items-center">
+                                    <i class="fas fa-laptop-medical text-primary ml-2"></i>
+                                    العيادة الافتراضية
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-6">اتصل بطبيبك بالصوت والصورة من المنزل للحصول على الاستشارة الطبية</p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                        <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-user-md text-2xl"></i></div>
+                                        <h4 class="font-medium">طب عام</h4>
+                                    </div>
+                                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                        <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-baby text-2xl"></i></div>
+                                        <h4 class="font-medium">طب الأطفال</h4>
+                                    </div>
+                                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                        <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-female text-2xl"></i></div>
+                                        <h4 class="font-medium">طب النساء والولادة</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Mental Health Support -->
+                            <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                                <h3 class="text-xl font-bold mb-4 flex items-center">
+                                    <i class="fas fa-brain text-primary ml-2"></i>
+                                    منصة الدعم النفسي
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-6">الدعم النفسي والمشورة المتخصصة من خلال جلسات آمنة وسرية</p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                        <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-stethoscope text-2xl"></i></div>
+                                        <h4 class="font-medium">طب نفسي</h4>
+                                    </div>
+                                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                        <div class="mb-2 text-primary group-hover:text-white"><i class="fas fa-comments text-2xl"></i></div>
+                                        <h4 class="font-medium">أخصائي نفساني</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Home Visits Page -->
+            <div id="home-visits-page" class="page">
+                <section class="py-12">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-2xl font-bold mb-8 text-center">الزيارات المنزلية</h2>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">
+                                نوفر لك خدمات طبية متكاملة في منزلك للراحة والخصوصية. طاقم طبي متخصص يصل إليك أينما كنت.
+                            </p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
+                                    <span class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center ml-4">
+                                        <i class="fas fa-user-md text-green-600 dark:text-green-400"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="font-medium">زيارة طبيب</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">كشف طبي شامل في منزلك</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
+                                    <span class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center ml-4">
+                                        <i class="fas fa-syringe text-blue-600 dark:text-blue-400"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="font-medium">خدمة التمريض</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">رعاية تمريضية متخصصة</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
+                                    <span class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center ml-4">
+                                        <i class="fas fa-walking text-purple-600 dark:text-purple-400"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="font-medium">علاج طبيعي</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">جلسات علاج طبيعي منزلية</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
+                                    <span class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center ml-4">
+                                        <i class="fas fa-hand-holding-heart text-yellow-600 dark:text-yellow-400"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="font-medium">المرافقة الصحية</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">رعاية دائمة للمرضى</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
+                                    <span class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center ml-4">
+                                        <i class="fas fa-syringe text-red-600 dark:text-red-400"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="font-medium">التطعيمات المنزلية</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">تطعيمات آمنة في المنزل</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex items-center">
+                                    <span class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center ml-4">
+                                        <i class="fas fa-x-ray text-indigo-600 dark:text-indigo-400"></i>
+                                    </span>
+                                    <div>
+                                        <h4 class="font-medium">الأشعة المنزلية</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">خدمات أشعة متنقلة</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Appointments Page -->
+            <div id="appointments-page" class="page">
+                <section class="py-12">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-2xl font-bold mb-8 text-center">أخذ المواعيد</h2>
+                        
+                        <!-- Clinic Selection -->
+                        <div class="mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-bold mb-4">اختر العيادة</h3>
+                            
+                            <!-- Filters -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">المنطقة</label>
+                                    <select id="clinic-location" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        <option value="">جميع المناطق</option>
+                                        <option value="center">وسط المدينة</option>
+                                        <option value="east">شرق المدينة</option>
+                                        <option value="west">غرب المدينة</option>
+                                        <option value="north">شمال المدينة</option>
+                                        <option value="south">جنوب المدينة</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">السعر</label>
+                                    <select id="clinic-price" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        <option value="">جميع الأسعار</option>
+                                        <option value="low">منخفض (أقل من 1000 دج)</option>
+                                        <option value="mid">متوسط (1000 - 2000 دج)</option>
+                                        <option value="high">مرتفع (أكثر من 2000 دج)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">وقت متاح</label>
+                                    <select id="clinic-time" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        <option value="">جميع الأوقات</option>
+                                        <option value="morning">صباحاً (08:00 - 12:00)</option>
+                                        <option value="afternoon">ظهراً (12:00 - 16:00)</option>
+                                        <option value="evening">مساءً (16:00 - 20:00)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Clinics List -->
+                            <div class="grid grid-cols-1 gap-4" id="clinics-list">
+                                <!-- Clinic 1 -->
+                                <div class="clinic-card bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row" data-location="center" data-price="mid" data-time="morning afternoon">
+                                    <div class="md:w-1/4 mb-4 md:mb-0">
+                                        <div class="bg-primary/10 rounded-lg p-4 h-full flex items-center justify-center">
+                                            <i class="fas fa-hospital text-primary text-4xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-2/4 md:px-4">
+                                        <h4 class="text-lg font-bold">عيادة النور</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> وسط المدينة، شارع الأمير عبد القادر</p>
+                                        <div class="flex flex-wrap mb-2">
+                                            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-2 py-1 ml-2 mb-1">أمراض القلب</span>
+                                            <span class="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full px-2 py-1 ml-2 mb-1">أمراض العظام</span>
+                                            <span class="text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full px-2 py-1 ml-2 mb-1">طب الأطفال</span>
+                                        </div>
+                                        <p class="text-sm"><i class="fas fa-clock ml-1"></i> 08:00 - 16:00</p>
+                                    </div>
+                                    <div class="md:w-1/4 flex flex-col justify-between items-center">
+                                        <div class="text-center">
+                                            <p class="font-bold text-lg text-primary">1500 دج</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">سعر الكشف</p>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition mt-2 w-full md:w-auto">
+                                            حجز موعد
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Clinic 2 -->
+                                <div class="clinic-card bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row" data-location="east" data-price="high" data-time="morning afternoon evening">
+                                    <div class="md:w-1/4 mb-4 md:mb-0">
+                                        <div class="bg-primary/10 rounded-lg p-4 h-full flex items-center justify-center">
+                                            <i class="fas fa-hospital-alt text-primary text-4xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-2/4 md:px-4">
+                                        <h4 class="text-lg font-bold">المركز الطبي الحديث</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> شرق المدينة، حي الرياض</p>
+                                        <div class="flex flex-wrap mb-2">
+                                            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-2 py-1 ml-2 mb-1">جميع التخصصات</span>
+                                        </div>
+                                        <p class="text-sm"><i class="fas fa-clock ml-1"></i> 08:00 - 20:00</p>
+                                    </div>
+                                    <div class="md:w-1/4 flex flex-col justify-between items-center">
+                                        <div class="text-center">
+                                            <p class="font-bold text-lg text-primary">2500 دج</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">سعر الكشف</p>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition mt-2 w-full md:w-auto">
+                                            حجز موعد
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Clinic 3 -->
+                                <div class="clinic-card bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row" data-location="west" data-price="low" data-time="afternoon">
+                                    <div class="md:w-1/4 mb-4 md:mb-0">
+                                        <div class="bg-primary/10 rounded-lg p-4 h-full flex items-center justify-center">
+                                            <i class="fas fa-clinic-medical text-primary text-4xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-2/4 md:px-4">
+                                        <h4 class="text-lg font-bold">عيادة الرحمة</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> غرب المدينة، حي السلام</p>
+                                        <div class="flex flex-wrap mb-2">
+                                            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-2 py-1 ml-2 mb-1">طب العائلة</span>
+                                            <span class="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full px-2 py-1 ml-2 mb-1">الطب العام</span>
+                                        </div>
+                                        <p class="text-sm"><i class="fas fa-clock ml-1"></i> 12:00 - 16:00</p>
+                                    </div>
+                                    <div class="md:w-1/4 flex flex-col justify-between items-center">
+                                        <div class="text-center">
+                                            <p class="font-bold text-lg text-primary">800 دج</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">سعر الكشف</p>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition mt-2 w-full md:w-auto">
+                                            حجز موعد
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Specialties Section -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                                    <h3 class="text-xl font-bold mb-4">التخصصات الطبية</h3>
+                                    
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-heartbeat text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">القلب</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-bone text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">العظام</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-brain text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">الأعصاب</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-eye text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">العيون</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-tooth text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">الأسنان</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-lungs text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">الصدرية</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-allergies text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">الجلدية</h4>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                            <div class="text-primary"><i class="fas fa-child text-xl"></i></div>
+                                            <h4 class="text-sm font-medium mt-1">الأطفال</h4>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-6">
+                                        <h3 class="text-xl font-bold mb-4">الأخصائيين</h3>
+                                        
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                                <div class="text-primary"><i class="fas fa-comments text-xl"></i></div>
+                                                <h4 class="text-sm font-medium mt-1">أخصائي نفساني</h4>
+                                            </div>
+                                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                                                <div class="text-primary"><i class="fas fa-comment-dots text-xl"></i></div>
+                                                <h4 class="text-sm font-medium mt-1">أخصائي أرطوفوني</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                                    <h3 class="text-xl font-bold mb-4 text-center">حجز موعد</h3>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">العيادة</label>
+                                            <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                                <option value="">اختر العيادة</option>
+                                                <option value="1">عيادة النور</option>
+                                                <option value="2">المركز الطبي الحديث</option>
+                                                <option value="3">عيادة الرحمة</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">التخصص</label>
+                                            <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                                <option value="">اختر التخصص</option>
+                                                <option value="1">طب عام</option>
+                                                <option value="2">طب القلب</option>
+                                                <option value="3">طب العظام</option>
+                                                <option value="4">طب الأعصاب</option>
+                                                <option value="5">طب العيون</option>
+                                                <option value="6">أخصائي نفساني</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">التاريخ</label>
+                                            <input type="date" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">الوقت</label>
+                                            <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                                <option value="">اختر الوقت</option>
+                                                <option value="09:00">09:00</option>
+                                                <option value="10:00">10:00</option>
+                                                <option value="11:00">11:00</option>
+                                                <option value="12:00">12:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">ملاحظات</label>
+                                            <textarea class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base" rows="3"></textarea>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition">
+                                            تأكيد الحجز
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Labs and Tests Page -->
+            <div id="labs-page" class="page">
+                <section class="py-12">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-2xl font-bold mb-8 text-center">المخابر والتحاليل</h2>
+                        
+                        <!-- Lab Selection -->
+                        <div class="mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-bold mb-4">اختر المختبر</h3>
+                            
+                            <!-- Filters -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">المنطقة</label>
+                                    <select id="lab-location" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        <option value="">جميع المناطق</option>
+                                        <option value="center">وسط المدينة</option>
+                                        <option value="east">شرق المدينة</option>
+                                        <option value="west">غرب المدينة</option>
+                                        <option value="north">شمال المدينة</option>
+                                        <option value="south">جنوب المدينة</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">نطاق السعر</label>
+                                    <select id="lab-price" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        <option value="">جميع الأسعار</option>
+                                        <option value="low">منخفض</option>
+                                        <option value="mid">متوسط</option>
+                                        <option value="high">مرتفع</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">وقت الاستلام</label>
+                                    <select id="lab-time" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        <option value="">جميع الأوقات</option>
+                                        <option value="same-day">نفس اليوم</option>
+                                        <option value="next-day">اليوم التالي</option>
+                                        <option value="two-days">خلال يومين</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Labs List -->
+                            <div class="grid grid-cols-1 gap-4" id="labs-list">
+                                <!-- Lab 1 -->
+                                <div class="lab-card bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row" data-location="center" data-price="mid" data-time="next-day">
+                                    <div class="md:w-1/4 mb-4 md:mb-0">
+                                        <div class="bg-primary/10 rounded-lg p-4 h-full flex items-center justify-center">
+                                            <i class="fas fa-flask text-primary text-4xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-2/4 md:px-4">
+                                        <h4 class="text-lg font-bold">مختبر الشفاء</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> وسط المدينة، شارع ديدوش مراد</p>
+                                        <div class="flex flex-wrap mb-2">
+                                            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-2 py-1 ml-2 mb-1">جميع التحاليل</span>
+                                        </div>
+                                        <p class="text-sm"><i class="fas fa-clock ml-1"></i> مدة الاستلام: اليوم التالي</p>
+                                    </div>
+                                    <div class="md:w-1/4 flex flex-col justify-between items-center">
+                                        <div class="text-center">
+                                            <p class="font-bold text-lg text-primary">متوسط</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">نطاق السعر</p>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition mt-2 w-full md:w-auto">
+                                            طلب تحليل
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Lab 2 -->
+                                <div class="lab-card bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row" data-location="north" data-price="high" data-time="same-day">
+                                    <div class="md:w-1/4 mb-4 md:mb-0">
+                                        <div class="bg-primary/10 rounded-lg p-4 h-full flex items-center justify-center">
+                                            <i class="fas fa-vial text-primary text-4xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-2/4 md:px-4">
+                                        <h4 class="text-lg font-bold">مختبر البركة</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> شمال المدينة، حي الياسمين</p>
+                                        <div class="flex flex-wrap mb-2">
+                                            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-2 py-1 ml-2 mb-1">جميع التحاليل</span>
+                                            <span class="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full px-2 py-1 ml-2 mb-1">خدمة استلام سريعة</span>
+                                        </div>
+                                        <p class="text-sm"><i class="fas fa-clock ml-1"></i> مدة الاستلام: نفس اليوم</p>
+                                    </div>
+                                    <div class="md:w-1/4 flex flex-col justify-between items-center">
+                                        <div class="text-center">
+                                            <p class="font-bold text-lg text-primary">مرتفع</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">نطاق السعر</p>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition mt-2 w-full md:w-auto">
+                                            طلب تحليل
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Lab 3 -->
+                                <div class="lab-card bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row" data-location="east" data-price="low" data-time="two-days">
+                                    <div class="md:w-1/4 mb-4 md:mb-0">
+                                        <div class="bg-primary/10 rounded-lg p-4 h-full flex items-center justify-center">
+                                            <i class="fas fa-microscope text-primary text-4xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="md:w-2/4 md:px-4">
+                                        <h4 class="text-lg font-bold">مختبر الرازي</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2"><i class="fas fa-map-marker-alt ml-1"></i> شرق المدينة، حي البدر</p>
+                                        <div class="flex flex-wrap mb-2">
+                                            <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full px-2 py-1 ml-2 mb-1">التحاليل الأساسية</span>
+                                        </div>
+                                        <p class="text-sm"><i class="fas fa-clock ml-1"></i> مدة الاستلام: خلال يومين</p>
+                                    </div>
+                                    <div class="md:w-1/4 flex flex-col justify-between items-center">
+                                        <div class="text-center">
+                                            <p class="font-bold text-lg text-primary">منخفض</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">نطاق السعر</p>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition mt-2 w-full md:w-auto">
+                                            طلب تحليل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-2">
+                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                    <h3 class="text-xl font-bold mb-6">التحاليل المتوفرة</h3>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل الدم الشامل</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">CBC</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل وظائف الكبد</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Liver Function Tests</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل وظائف الكلى</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Kidney Function Tests</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل الكوليسترول والدهون</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Lipid Profile</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل السكر الصائم</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Fasting Blood Sugar</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل السكر التراكمي</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">HbA1c</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل هرمونات الغدة الدرقية</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Thyroid Function Tests</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-700">
+                                            <span class="w-3 h-3 bg-primary rounded-full ml-3"></span>
+                                            <div>
+                                                <h4 class="font-medium">تحليل فيتامين د</h4>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Vitamin D Test</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                                    <h3 class="text-xl font-bold mb-4 text-center">طلب تحليل</h3>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">المختبر</label>
+                                            <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                                <option value="">اختر المختبر</option>
+                                                <option value="1">مختبر الشفاء</option>
+                                                <option value="2">مختبر البركة</option>
+                                                <option value="3">مختبر الرازي</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">نوع التحليل</label>
+                                            <select class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                                <option value="">اختر نوع التحليل</option>
+                                                <option value="1">تحليل الدم الشامل</option>
+                                                <option value="2">تحليل وظائف الكبد</option>
+                                                <option value="3">تحليل وظائف الكلى</option>
+                                                <option value="4">تحليل السكر الصائم</option>
+                                                <option value="5">تحليل فيتامين د</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">التاريخ</label>
+                                            <input type="date" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-base">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium mb-1">طريقة الحصول على العينة</label>
+                                            <div class="space-y-2">
+                                                <label class="flex items-center">
+                                                    <input type="radio" name="sample_method" class="ml-2 w-4 h-4 text-primary">
+                                                    <span>زيارة المختبر</span>
+                                                </label>
+                                                <label class="flex items-center">
+                                                    <input type="radio" name="sample_method" class="ml-2 w-4 h-4 text-primary">
+                                                    <span>الزيارة المنزلية</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-6">
+                                            <label class="block text-sm font-medium mb-1">طريقة الدفع</label>
+                                            <div class="space-y-2">
+                                                <label class="flex items-center">
+                                                    <input type="radio" name="payment_method" class="ml-2 w-4 h-4 text-primary">
+                                                    <span>البريدي موب</span>
+                                                </label>
+                                                <label class="flex items-center">
+                                                    <input type="radio" name="payment_method" class="ml-2 w-4 h-4 text-primary">
+                                                    <span>نقدًا (كاش)</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition">
+                                            طلب التحليل
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="bg-gray-800 dark:bg-gray-900 text-white py-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">KF Santé</h3>
+                        <p class="text-gray-400">رعاية صحية متكاملة في متناول يديك</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">روابط سريعة</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition nav-link" data-page="home-page">الرئيسية</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition nav-link" data-page="remote-page">الاستشارات عن بعد</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition nav-link" data-page="home-visits-page">الزيارات المنزلية</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition nav-link" data-page="appointments-page">أخذ المواعيد</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition nav-link" data-page="labs-page">المخابر والتحاليل</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">تواصل معنا</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-phone-alt ml-2 text-primary"></i>
+                                <span class="text-gray-400">123-456-7890</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope ml-2 text-primary"></i>
+                                <span class="text-gray-400">info@kfsante.com</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-map-marker-alt ml-2 text-primary"></i>
+                                <span class="text-gray-400">الجزائر العاصمة</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">تابعنا</h3>
+                        <div class="flex space-x-4 space-x-reverse">
+                            <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-gray-700 dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 mt-8 pt-6 text-center">
+                    <p class="text-gray-400">جميع الحقوق محفوظة &copy; 2025 KF Santé</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Notifications Panel -->
+    <div id="notifications-panel" class="fixed inset-0 bg-black/50 z-50 hidden">
+        <div class="absolute top-16 left-4 w-80 max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="font-bold">معلومات صحية</h3>
+                <button id="close-notifications" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4 space-y-4">
+                <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+                    <div class="font-bold text-blue-800 dark:text-blue-300 mb-1">فوائد شرب الماء</div>
+                    <p class="text-sm text-blue-700 dark:text-blue-400">يساعد شرب 8 أكواب من الماء يومياً على تحسين وظائف الجسم وتنشيط الدورة الدموية.</p>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">منذ 3 ساعات</div>
+                </div>
+                
+                <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                    <div class="font-bold text-green-800 dark:text-green-300 mb-1">النشاط البدني اليومي</div>
+                    <p class="text-sm text-green-700 dark:text-green-400">30 دقيقة من المشي يومياً تقلل من خطر الإصابة بأمراض القلب والأوعية الدموية.</p>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">منذ 5 ساعات</div>
+                </div>
+                
+                <div class="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-lg">
+                    <div class="font-bold text-purple-800 dark:text-purple-300 mb-1">النوم الصحي</div>
+                    <p class="text-sm text-purple-700 dark:text-purple-400">يحتاج البالغون إلى 7-9 ساعات من النوم يومياً للحفاظ على الصحة العقلية والجسدية.</p>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">منذ يوم</div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
     
     <script>
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+        // Health information data
+        const healthInfo = [
+            {
+                title: "فوائد شرب الماء",
+                content: "يساعد شرب 8 أكواب من الماء يومياً على تحسين وظائف الجسم وتنشيط الدورة الدموية.",
+                color: "blue"
+            },
+            {
+                title: "النشاط البدني اليومي",
+                content: "30 دقيقة من المشي يومياً تقلل من خطر الإصابة بأمراض القلب والأوعية الدموية.",
+                color: "green"
+            },
+            {
+                title: "النوم الصحي",
+                content: "يحتاج البالغون إلى 7-9 ساعات من النوم يومياً للحفاظ على الصحة العقلية والجسدية.",
+                color: "purple"
+            },
+            {
+                title: "فوائد الخضروات والفواكه",
+                content: "تناول 5 حصص متنوعة من الخضروات والفواكه يومياً يعزز المناعة ويقي من العديد من الأمراض.",
+                color: "yellow"
+            },
+            {
+                title: "الحد من السكريات",
+                content: "تقليل استهلاك المشروبات الغازية والحلويات يساعد في الوقاية من مرض السكري وزيادة الوزن.",
+                color: "red"
+            },
+            {
+                title: "صحة الأسنان",
+                content: "يُنصح بتنظيف الأسنان مرتين يومياً لمدة دقيقتين مع استخدام خيط الأسنان للحفاظ على صحة الفم.",
+                color: "indigo"
+            },
+            {
+                title: "استهلاك الملح",
+                content: "الحد من استهلاك الملح إلى أقل من 5 غرام يومياً يساعد في خفض ضغط الدم والوقاية من أمراض القلب.",
+                color: "blue"
+            }
+        ];
         
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // Close mobile menu when clicking on a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        // Clinics filter functionality
+        function filterClinics() {
+            const locationFilter = document.getElementById('clinic-location').value;
+            const priceFilter = document.getElementById('clinic-price').value;
+            const timeFilter = document.getElementById('clinic-time').value;
+            
+            const clinics = document.querySelectorAll('.clinic-card');
+            
+            clinics.forEach(clinic => {
+                const locationMatch = !locationFilter || clinic.dataset.location === locationFilter;
+                const priceMatch = !priceFilter || clinic.dataset.price === priceFilter;
+                const timeMatch = !timeFilter || clinic.dataset.time.includes(timeFilter);
                 
-                if(this.getAttribute('href') === "#") return;
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
+                if (locationMatch && priceMatch && timeMatch) {
+                    clinic.style.display = 'flex';
+                } else {
+                    clinic.style.display = 'none';
                 }
             });
-        });
+        }
         
-        // Login button - show registration section
-        document.querySelector('.login-btn').addEventListener('click', function(e) {
-            e.preventDefault();
+        // Labs filter functionality
+        function filterLabs() {
+            const locationFilter = document.getElementById('lab-location').value;
+            const priceFilter = document.getElementById('lab-price').value;
+            const timeFilter = document.getElementById('lab-time').value;
             
-            const registerSection = document.getElementById('register');
-            window.scrollTo({
-                top: registerSection.offsetTop - 100,
-                behavior: 'smooth'
+            const labs = document.querySelectorAll('.lab-card');
+            
+            labs.forEach(lab => {
+                const locationMatch = !locationFilter || lab.dataset.location === locationFilter;
+                const priceMatch = !priceFilter || lab.dataset.price === priceFilter;
+                const timeMatch = !timeFilter || lab.dataset.time === timeFilter;
+                
+                if (locationMatch && priceMatch && timeMatch) {
+                    lab.style.display = 'flex';
+                } else {
+                    lab.style.display = 'none';
+                }
             });
+        }
+        
+        // Show health notification
+        function showHealthNotification() {
+            const randomIndex = Math.floor(Math.random() * healthInfo.length);
+            const info = healthInfo[randomIndex];
+            const notificationContainer = document.getElementById('notifications');
+            
+            const notification = document.createElement('div');
+            notification.className = `notification bg-${info.color}-50 dark:bg-${info.color}-900/20 p-3 rounded-lg shadow-md`;
+            notification.innerHTML = `
+                <div class="font-bold text-${info.color}-800 dark:text-${info.color}-300 mb-1">${info.title}</div>
+                <p class="text-sm text-${info.color}-700 dark:text-${info.color}-400">${info.content}</p>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Remove notification after animation completes
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+        
+        // Navigation between pages
+        function navigateToPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.dataset.page === pageId) {
+                    link.classList.add('text-primary', 'border-primary');
+                    link.classList.remove('hover:text-primary', 'border-transparent', 'hover:border-primary');
+                } else {
+                    link.classList.remove('text-primary', 'border-primary');
+                    link.classList.add('hover:text-primary', 'border-transparent', 'hover:border-primary');
+                }
+            });
+            
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.add('hidden');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Authentication page tabs
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            
+            loginTab.addEventListener('click', () => {
+                loginTab.classList.add('border-primary', 'text-primary');
+                registerTab.classList.remove('border-primary', 'text-primary');
+                registerTab.classList.add('border-transparent');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            });
+            
+            registerTab.addEventListener('click', () => {
+                registerTab.classList.add('border-primary', 'text-primary');
+                loginTab.classList.remove('border-primary', 'text-primary');
+                loginTab.classList.add('border-transparent');
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            });
+            
+            // Login, Register and Skip Authentication
+            document.getElementById('login-btn').addEventListener('click', () => {
+                document.getElementById('auth-page').classList.remove('active');
+                document.getElementById('app-container').classList.remove('hidden');
+            });
+            
+            document.getElementById('register-btn').addEventListener('click', () => {
+                document.getElementById('auth-page').classList.remove('active');
+                document.getElementById('app-container').classList.remove('hidden');
+            });
+            
+            document.getElementById('skip-auth-btn').addEventListener('click', () => {
+                document.getElementById('auth-page').classList.remove('active');
+                document.getElementById('app-container').classList.remove('hidden');
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // User dropdown menu
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userMenuBtn.addEventListener('click', () => {
+                userDropdown.classList.toggle('hidden');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+            
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('app-container').classList.add('hidden');
+                document.getElementById('auth-page').classList.add('active');
+                userDropdown.classList.add('hidden');
+            });
+            
+            // Navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateToPage(link.dataset.page);
+                });
+            });
+            
+            // View details buttons on home page
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateToPage(button.dataset.page);
+                });
+            });
+            
+            // Clinics & Labs filters
+            document.getElementById('clinic-location')?.addEventListener('change', filterClinics);
+            document.getElementById('clinic-price')?.addEventListener('change', filterClinics);
+            document.getElementById('clinic-time')?.addEventListener('change', filterClinics);
+            
+            document.getElementById('lab-location')?.addEventListener('change', filterLabs);
+            document.getElementById('lab-price')?.addEventListener('change', filterLabs);
+            document.getElementById('lab-time')?.addEventListener('change', filterLabs);
+            
+            // Notification bell
+            const notificationBell = document.getElementById('notification-bell');
+            const notificationsPanel = document.getElementById('notifications-panel');
+            const closeNotifications = document.getElementById('close-notifications');
+            
+            notificationBell.addEventListener('click', () => {
+                notificationsPanel.classList.toggle('hidden');
+            });
+            
+            closeNotifications.addEventListener('click', () => {
+                notificationsPanel.classList.add('hidden');
+            });
+            
+            // Show random health notification every 30 seconds
+            showHealthNotification();
+            setInterval(showHealthNotification, 30000);
         });
     </script>
 </body>
