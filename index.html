@@ -1,52 +1,162 @@
-}
-        });
-        
-        // Navigation
-        const navItems = document.querySelectorAll('.nav-item');
-        const sections = document.querySelectorAll('.section-content');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const sectionId = item.getAttribute('data-section');
-                
-                // Hide all sections
-                sections.forEach(section => {
-                    section.classList.add('hidden');
-                });
-                
-                // Show the selected section
-                document.getElementById(${sectionId}-section).classList.remove('hidden');
-                
-                // Update active nav item
-                navItems.forEach(navItem => {
-                    navItem.classList.remove('bg-primary', 'text-white');
-                });
-                item.classList.add('bg-primary', 'text-white');
-                
-                // Hide sidebar on mobile after clicking
-                if (window.innerWidth < 768) {
-                    sidebar.classList.add('hidden');
-                    sidebar.classList.remove('absolute', 'inset-y-0', 'right-0', 'z-10');
-                    sidebar.style.top = '';
-                    sidebar.style.height = '';
-                }
-            });
-        });
-        
-        // Set dashboard as active by default
-        document.querySelector('[data-section="dashboard"]').classList.add('bg-primary', 'text-white');
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                sidebar.classList.remove('hidden', 'absolute', 'inset-y-0', 'right-0', 'z-10');
-                sidebar.style.top = '';
-                sidebar.style.height = '';
-            } else {
-                sidebar.classList.add('hidden');
-                sidebar.classList.remove('absolute', 'inset-y-0', 'right-0', 'z-10');
-            }
-        });
-    </script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KF Santé</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#5D5CDE',
+          },
+        },
+      },
+    };
+
+    // الوضع الداكن تلقائيًا
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      document.documentElement.classList.toggle('dark', event.matches);
+    });
+
+    // إشعار صحي يومي
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(() => {
+        alert("معلومة صحية: شرب الماء بانتظام يساعد في تحسين التركيز وتقليل التوتر.");
+      }, 3000);
+    });
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+    body {
+      font-family: 'Tajawal', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+  <!-- التوجيه لصفحة التسجيل أولاً -->
+  <script>
+    window.location.href = "register.html";
+  </script>
 </body>
 </html>
+<!-- Appointments Section -->
+<section class="py-12 bg-gray-50 dark:bg-gray-800" id="appointments">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-8 text-center">أخذ المواعيد</h2>
+
+        <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+            <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">
+                احجز موعدك بسهولة مع الطبيب أو الأخصائي المناسب، في الوقت الذي يناسبك، سواء لحضور جلسة عن بُعد أو زيارة منزلية.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Booking by Specialty -->
+                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                    <div class="mb-4 text-primary group-hover:text-white">
+                        <i class="fas fa-user-md text-3xl"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-2">حسب التخصص</h4>
+                    <p class="text-sm">اختر التخصص الذي تحتاجه واحجز مع طبيب معتمد.</p>
+                </div>
+
+                <!-- Booking by Availability -->
+                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                    <div class="mb-4 text-primary group-hover:text-white">
+                        <i class="fas fa-clock text-3xl"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-2">حسب التوقيت</h4>
+                    <p class="text-sm">اختر اليوم والساعة الأنسب لجدولك.</p>
+                </div>
+
+                <!-- Booking by Doctor -->
+                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg text-center hover:bg-primary hover:text-white transition cursor-pointer">
+                    <div class="mb-4 text-primary group-hover:text-white">
+                        <i class="fas fa-user text-3xl"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-2">حسب الطبيب</h4>
+                    <p class="text-sm">اختر الطبيب مباشرة إذا كنت تعرفه مسبقًا.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="/booking" class="inline-block bg-primary text-white px-6 py-3 rounded-full font-semibold hover:bg-primary/90 transition">
+                        احجز موعدك الآن
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+import { HeartHandshake, Headset, Clock } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
+export default function WhyChooseUs() {
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-4xl font-bold text-gray-800 mb-6">
+          Why Choose Us?
+        </h2>
+        <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+          Our multidisciplinary team is dedicated to providing you with effective and compassionate care, wherever you are.
+        </p>
+        <div className="grid gap-8 md:grid-cols-3">
+          <Card className="shadow-lg border-0">
+            <CardContent className="flex flex-col items-center text-center p-6">
+              <HeartHandshake className="text-primary w-12 h-12 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Personalized Care
+              </h3>
+              <p className="text-gray-600">
+                We tailor our services to your individual needs, ensuring a unique and caring experience.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg border-0">
+            <CardContent className="flex flex-col items-center text-center p-6">
+              <Headset className="text-primary w-12 h-12 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Professional Experts
+              </h3>
+              <p className="text-gray-600">
+                Our team consists of certified professionals in psychology, nutrition, and nursing, committed to your well-being.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg border-0">
+            <CardContent className="flex flex-col items-center text-center p-6">
+              <Clock className="text-primary w-12 h-12 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Flexible Appointments
+              </h3>
+              <p className="text-gray-600">
+                Book consultations at your convenience — we're here to support you day or night.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+}
+<div class="relative flex items-center justify-center mb-4">
+  <hr class="w-full border-gray-300 dark:border-gray-600" />
+  <span class="px-2 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm">أو</span>
+  <hr class="w-full border-gray-300 dark:border-gray-600" />
+</div><button type="button" class="w-full bg-white dark:bg-gray-700 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 font-medium py-3 px-4 rounded-xl transition flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-600"
+
+> 
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2" viewBox="0 0 16 16">
+    <path
+      d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276
